@@ -1,0 +1,123 @@
+//* ---- 💫 https://github.com/JaKooLit 💫 ---- *//
+/* Waybar Workspaces modules */
+
+/* Generally, this is a potential expanding of choices for hyprland/workspace */
+// HYPRLAND WORKSPACES. CHOOSE as desired and place on waybar configs
+
+// bugfix crash on closing keepass:
+// https://www.reddit.com/r/waybar/comments/1ccyylo/hyprlandworkspaces_crashes_when_using_classtitle/
+
+{
+// CIRCLES Style
+"hyprland/workspaces": {
+	"active-only": false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch workspace e+1",
+	"on-scroll-down": "hyprctl dispatch workspace e-1",
+        "persistent-workspaces": {
+	        "*": 5
+	},
+	"format-icons": {
+		"active": "",
+		"default": "",
+	},
+},
+// ROMAN Numerals style
+"hyprland/workspaces#roman": {
+	"active-only": false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch workspace e+1",
+	"on-scroll-down": "hyprctl dispatch workspace e-1",
+    "persistent-workspaces": {
+      "*": 5
+	},
+	"format-icons": {
+		"1": "I",
+		"2": "II",
+		"3": "III",
+		"4": "IV",
+		"5": "V",
+		"6": "VI",
+		"7": "VII",
+		"8": "VIII",
+		"9": "IX",
+		"10": "X",
+	},
+},
+  
+//  NUMBERS and ICONS style
+"hyprland/workspaces#4": {
+	"format": "{name}",
+	"format": " {name} {icon} ",
+	//"format": " {icon} ",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch workspace e+1",
+	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"all-outputs": true,
+	"sort-by-number": true,
+	"format-icons": {
+		"1": " ",
+		"2": " ",
+		"3": " ",
+		"4": " ",
+		"5": " ",
+		"6": " ",
+		"7": "",
+		"8": " ",
+		"9": "",
+		"10": "10",
+		"focused": "",
+		"default": "",
+	},
+},
+// NUMBERS and ICONS style with window rewrite 
+"hyprland/workspaces#rw": {
+	"disable-scroll": true,
+	"all-outputs": true,
+	"warp-on-scroll": false,
+	"sort-by-number": true,
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch workspace e+1",
+	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"format": "{icon} {windows}",
+	"format-window-separator": " ",
+	"window-rewrite-default": " ",
+	"window-rewrite": {
+		"firefox": " ",
+		"kitty": " ",
+		"kitty-dropterm": " ",
+		"Chromium": " ",
+		"VSCode|VSCodium": "󰨞 ",
+		"thunar": "󰝰 ",
+		"[Tt]hunderbird|[Tt]hunderbird-esr": " ",
+		"discord|[Ww]ebcord|Vesktop": " ",
+		"subl": "󰅳 ",
+		"mpv": " ",
+		"celluloid|Zoom": " ",
+		"Cider": "󰎆 ",
+		"virt-manager": " ",
+		"codeblocks": "󰅩 ",
+		"mousepad": " ",
+		"libreoffice-writer": " ",
+		"libreoffice-startcenter": "󰏆 ",
+		"polkit-gnome-authentication-agent-1": "󰒃 ",
+		"waterfox|waterfox-bin": " ",
+		"vlc": "󰕼 ",
+                "vscodium": " 󰨞",
+                "kitty": " ",
+                "vesktop": " ",
+                "keepassxc": " ",
+                "youtube": " ",
+                "obsidian": " 󱓧",
+                "steam": " "
+		}   
+	},
+}

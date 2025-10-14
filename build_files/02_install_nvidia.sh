@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -ouex pipefail
+
+### Install Nvidia driver
+
+# Activate RPM Fusion Free Repository
+dnf5 install -y \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+
+# Activate RPM Fusion Non-Free Repository
+dnf5 install -y \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+
+
+# install dev tools packages
+dnf5 install -y \
+	akmod-nvidia \
+	xorg-x11-drv-nvidia-cuda
+
+# install Kernel args
+cp /ctx/system_files/10_nvidia.toml /usr/lib/bootc/kargs.d/10-nvidia.toml
+
+
+### Kernem Mod
+### based on https://mrguitar.net/?p=2664
+
+# get modules
+kver=$(cd /usr/lib/modules && echo *)
+
+# create a fake unmae binary
+cat >/tmp/fake-uname <<EOF
+#!/usr/bin/env bash
+
+if [ "\$1" == "-r" ] ; then
+  echo ${kver}
+  exit 0
+fi
+
+exec /usr/bin/uname \$@
+EOF
+install -Dm0755 /tmp/fake-uname /tmp/bin/uname
+
+# install kernel modules
+PATH=/tmp/bin:$PATH dkms autoinstall -k ${kver}
+PATH=/tmp/bin:$PATH akmods --force --kernels ${kver}

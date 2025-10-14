@@ -1,0 +1,42 @@
+<network>
+  <name>trunk</name>
+  <forward mode='bridge'/>
+  <bridge name='ovsbr0'/>
+  <virtualport type='openvswitch'>
+    <parameters interfaceid='b100d20c-d16b-46a7-9a10-8ab179c32308'/>
+  </virtualport>
+  <portgroup name='vlan100'>
+    <vlan>
+      <tag id='100'/>
+    </vlan>
+  </portgroup>
+  <portgroup name='vlan110'>
+    <vlan>
+      <tag id='110'/>
+    </vlan>
+  </portgroup>
+  <portgroup name='vlan240'>
+    <vlan>
+      <tag id='240'/>
+    </vlan>
+  </portgroup>
+  <portgroup name='vlan250'>
+    <vlan>
+      <tag id='250'/>
+    </vlan>
+  </portgroup>
+  <portgroup name='vlan251'>
+    <vlan>
+      <tag id='251'/>
+    </vlan>
+  </portgroup>
+  <portgroup name='trunk'>
+    <vlan trunk='yes'>
+      <tag id='100'/>
+      <tag id='110'/>
+      <tag id='240'/>
+      <tag id='250'/>
+      <tag id='251'/>
+    </vlan>
+  </portgroup>
+</network>

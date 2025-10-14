@@ -1,0 +1,5 @@
+<network>
+  <name>mgmt</name>
+  <bridge name="virbr1" stp="on" delay="0"/>
+  <ip address="10.0.99.1" netmask="255.255.255.0"></ip>
+</network>
