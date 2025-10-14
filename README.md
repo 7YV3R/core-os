@@ -2,7 +2,7 @@
 
 This repo represents my personal steps into the amzing world of Atomic Desktop.
 Started off by tinkering with Aurora (KDE Spin-Off from Universal Blue), but got frustrated
-with all the (very intense customization and modifications of Fedora Kinoite).
+with all the (very intense) customization and modifications of Fedora Kinoite.
 
 So tried to build my own custom spin of Fedora Kinoite (KDE Spin of Fedoras Atomic Desktop).
 
@@ -35,3 +35,8 @@ Building the image has been best-fitted for Podman usage on local instances. Yea
 
 ## Switch to the new image
 ``sudo bootc switch --transport containers-storage $(sudo podman images -q kinoite-ng)``
+
+# Credits
+- Most of the Hyprland DotFiles are based on or directly from **JaKooLit's** repository (https://github.com/JaKooLit/Hyprland-Dots). 
+- Also most of the wallpaper files are from **JaKooLit's** repo. (https://github.com/JaKooLit/Wallpaper-Bank)
+
