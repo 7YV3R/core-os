@@ -31,10 +31,10 @@ Atomic Desktop, to fit my personal needs.
 Building the image has been best-fitted for Podman usage on local instances. Yeah, it's a little bit rough at the moment.
 
 ## Building the image locally
-``sudo podman build -t kinoite-ng:latest .``
+``sudo podman build -t core-os:latest .``
 
 ## Switch to the new image
-``sudo bootc switch --transport containers-storage $(sudo podman images -q kinoite-ng)``
+``sudo bootc switch --transport containers-storage $(sudo podman images -q core-os)``
 
 # Credits
 - Most of the Hyprland DotFiles are based on or directly from **JaKooLit's** repository (https://github.com/JaKooLit/Hyprland-Dots). 
