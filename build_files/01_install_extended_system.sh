@@ -4,13 +4,15 @@ set -ouex pipefail
 
 ### Install extended system components
 
+VERACRYPT_DOWNLOAD_URL="https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-1.26.24-Fedora-40-x86_64.rpm"
+
 # Install dnf5 if not installed
 if ! rpm -q dnf5 >/dev/null; then
     rpm-ostree install dnf5 dnf5-plugins
 fi
 
 # install extended system packages
-dnf5 install -y \
+dnf5 install -y --setopt=install_weak_deps=False \
 	bolt \
 	chromium \
 	cockpit-bridge \
@@ -53,11 +55,12 @@ dnf5 remove -y \
 	plasma-workspace-x11
 
 # install veracrypt
-rpm -i https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-1.26.24-Fedora-40-x86_64.rpm
+rpm -i ${VERACRYPT_DOWNLOAD_URL}
 
 # install scrcpy
 dnf5 copr enable zeno/scrcpy -y
-dnf5 install -y scrcpy
+dnf5 install -y --setopt=install_weak_deps=False \
+	scrcpy
 dnf5 copr disable zeno/scrcpy -y
 
 # ensure flathub repo is available
@@ -74,3 +77,8 @@ systemctl mask sleep.target
 systemctl mask suspend.target 
 systemctl mask hibernate.target 
 systemctl mask hybrid-sleep.target
+
+
+# Cleanup
+dnf5 clean all
+rm -rf /var/cache/dnf

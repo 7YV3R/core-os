@@ -12,7 +12,7 @@ cp /ctx/repo_files/nvidia-container-toolkit.repo /etc/yum.repos.d/
 sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/nvidia-container-toolkit.repo
 
 # install dev tools packages
-dnf5 install -y \
+dnf5 install -y --setopt=install_weak_deps=False \
 	distrobox \
 	edk2-ovmf \
 	libvirt \
@@ -67,3 +67,7 @@ mkdir -p /var/lib/libvirt/dnsmasq
 
 # ensure Repo is disabled
 sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/nvidia-container-toolkit.repo
+
+# Cleanup
+dnf5 clean all
+rm -rf /var/cache/dnf

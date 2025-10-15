@@ -8,7 +8,7 @@ set -ouex pipefail
 dnf5 -y copr enable solopasha/hyprland
 
 # install hyprland packages
-dnf5 install -y \
+dnf5 install -y --setopt=install_weak_deps=False \
     alacritty \
     alsa-utils \
     blueman \
@@ -45,7 +45,8 @@ dnf5 -y copr disable solopasha/hyprland
 
 # install nerd-fonts
 dnf5 copr enable che/nerd-fonts -y
-dnf5 install -y nerd-fonts
+dnf5 install -y --setopt=install_weak_deps=False \
+    nerd-fonts
 dnf5 copr disable che/nerd-fonts -y
 
 # copy custom dotconfig files into skel path for new users
@@ -55,3 +56,8 @@ cp -r /ctx/dotconfig_files/swaync /etc/skel/.config/
 cp -r /ctx/dotconfig_files/waybar /etc/skel/.config/
 cp -r /ctx/dotconfig_files/wlogout /etc/skel/.config/
 cp -r /ctx/dotconfig_files/wofi /etc/skel/.config/
+
+
+# Cleanup
+dnf5 clean all
+rm -rf /var/cache/dnf

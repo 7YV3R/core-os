@@ -15,7 +15,7 @@ dnf5 install -y \
 
 
 # install dev tools packages
-dnf5 install -y \
+dnf5 install -y --setopt=install_weak_deps=False \
 	akmod-nvidia \
 	xorg-x11-drv-nvidia-cuda
 
@@ -45,3 +45,7 @@ install -Dm0755 /tmp/fake-uname /tmp/bin/uname
 # install kernel modules
 PATH=/tmp/bin:$PATH dkms autoinstall -k ${kver}
 PATH=/tmp/bin:$PATH akmods --force --kernels ${kver}
+
+# Cleanup
+dnf5 clean all
+rm -rf /var/cache/dnf

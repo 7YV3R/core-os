@@ -8,7 +8,7 @@ set -ouex pipefail
 dnf5 -y copr enable lukenukem/asus-linux
 
 # install Asus packages
-dnf5 install -y \
+dnf5 install -y --setopt=install_weak_deps=False \
     asusctl \
     supergfxctl
 
@@ -19,3 +19,6 @@ dnf5 -y copr disable lukenukem/asus-linux
 # Enable the supergfd service on boot
 systemctl enable supergfxd.service
 
+# Cleanup
+dnf5 clean all
+rm -rf /var/cache/dnf

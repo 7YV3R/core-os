@@ -12,7 +12,7 @@ cp /ctx/repo_files/vscodium.repo /etc/yum.repos.d/
 sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/vscodium.repo
 
 # install dev tools packages
-dnf5 install -y \
+dnf5 install -y --setopt=install_weak_deps=False \
 	android-tools \
 	codium \
 	git \
@@ -23,3 +23,7 @@ dnf5 install -y \
 
 # ensure Repo is disabled
 sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/vscodium.repo
+
+# Cleanup
+dnf5 clean all
+rm -rf /var/cache/dnf
