@@ -4,13 +4,6 @@ set -ouex pipefail
 
 ### Install virtualization/containerization environment
 
-# install prepared repo files
-mkdir -p /etc/yum.repos.d
-cp /ctx/repo_files/nvidia-container-toolkit.repo /etc/yum.repos.d/
-
-# ensure Repo is temporarily enabled
-sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/nvidia-container-toolkit.repo
-
 # install dev tools packages
 dnf5 install -y --setopt=install_weak_deps=False \
 	distrobox \
@@ -18,7 +11,6 @@ dnf5 install -y --setopt=install_weak_deps=False \
 	libvirt \
 	libvirt-nss \
 	libvirt-dbus \
-	nvidia-container-toolkit \
 	openvswitch \
 	podman-compose \
 	podman-docker \
@@ -64,9 +56,6 @@ echo "xhost +si:localuser:\$USER >/dev/null" > /etc/skel/.distroboxrc
 
 # ensure default network for virtual environment is running
 mkdir -p /var/lib/libvirt/dnsmasq
-
-# ensure Repo is disabled
-sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/nvidia-container-toolkit.repo
 
 # Cleanup
 dnf5 clean all

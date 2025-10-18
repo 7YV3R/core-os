@@ -7,7 +7,7 @@ COPY dotconfig_files /dotconfig_files
 COPY network_files /network_files
 
 # define base image
-FROM quay.io/fedora-ostree-desktops/kinoite:42
+FROM quay.io/fedora-ostree-desktops/kinoite:42 as coreos:latest
 
 # Add Layer with extended system modifications
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
@@ -16,12 +16,12 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build_files/01_install_extended_system.sh
 
-# Add Layer with Nvidia
+# Add Layer with Hyprland
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build_files/02_install_nvidia.sh
+    /ctx/build_files/02_install_hyprland.sh
 
 # Add Layer with Virtualization
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
@@ -37,12 +37,14 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build_files/04_install_dev_environment.sh
 
-# Add Layer with Hyprland
+FROM coreos:latest as coreos:asus-latest
+
+# Add Layer with Nvidia
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build_files/05_install_hyprland.sh
+    /ctx/build_files/05_install_nvidia.sh
 
 # Add Layer with Asus related stuff
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \

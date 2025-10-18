@@ -12,18 +12,24 @@ dnf5 install -y \
 dnf5 install -y \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
+# install prepared repo files
+mkdir -p /etc/yum.repos.d
+cp /ctx/repo_files/nvidia-container-toolkit.repo /etc/yum.repos.d/
 
+# ensure Repo is temporarily enabled
+sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/nvidia-container-toolkit.repo
 
 # install dev tools packages
 dnf5 install -y --setopt=install_weak_deps=False \
 	akmod-nvidia \
+  nvidia-container-toolkit \
 	xorg-x11-drv-nvidia-cuda
 
 # install Kernel args
 cp /ctx/system_files/10_nvidia.toml /usr/lib/bootc/kargs.d/10-nvidia.toml
 
 
-### Kernem Mod
+### Kernel Mod
 ### based on https://mrguitar.net/?p=2664
 
 # get modules
@@ -45,6 +51,9 @@ install -Dm0755 /tmp/fake-uname /tmp/bin/uname
 # install kernel modules
 PATH=/tmp/bin:$PATH dkms autoinstall -k ${kver}
 PATH=/tmp/bin:$PATH akmods --force --kernels ${kver}
+
+# ensure Repo is disabled
+sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/nvidia-container-toolkit.repo
 
 # Cleanup
 dnf5 clean all
