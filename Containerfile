@@ -37,6 +37,12 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build_files/04_install_dev_environment.sh
 
+### LINTING
+## Verify final image and contents are correct.
+RUN bootc container lint
+
+#---------------------------- coreos:asus-latest-----------------------------   
+
 FROM coreos:latest as coreos:asus-latest
 
 # Add Layer with Nvidia
@@ -52,6 +58,21 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build_files/08_install_asus.sh
+
+### LINTING
+## Verify final image and contents are correct.
+RUN bootc container lint
+
+#---------------------------- coreos:surface-latest-----------------------------
+
+FROM coreos:latest as coreos:surface-latest
+
+# Add Layer with Surface related stuff
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    /ctx/build_files/09_install_surface.sh
 
 ### LINTING
 ## Verify final image and contents are correct.

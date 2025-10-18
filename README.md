@@ -37,12 +37,18 @@ To build the *coreos* base image, execute
 To build the *coreos* image for Asus machines, execute
 ``sudo podman build --target=coreos:asus-latest -t core-os:asus-latest .``
 
+To build the *coreos* image for Surface machines, execute
+``sudo podman build --target=coreos:surface-latest -t core-os:surface-latest .``
+
 ## Switch to the new image
 To use the *coreos* base image, execute
 ``sudo bootc switch --transport containers-storage $(sudo podman images -q core-os:latest)``
 
 To use the *coreos* Asus image, execute
 ``sudo bootc switch --transport containers-storage $(sudo podman images -q core-os:asus-latest)``
+
+To use the *coreos* Asus image, execute
+``sudo bootc switch --transport containers-storage $(sudo podman images -q core-os:surface-latest)``
 
 # Credits
 - Most of the Hyprland DotFiles are based on or directly from **JaKooLit's** repository (https://github.com/JaKooLit/Hyprland-Dots). 
