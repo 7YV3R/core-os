@@ -63,9 +63,6 @@ dnf5 install -y --setopt=install_weak_deps=False \
 	scrcpy
 dnf5 copr disable zeno/scrcpy -y
 
-# ensure flathub repo is available
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
 # enable services
 systemctl enable cockpit.socket
 
