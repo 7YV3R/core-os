@@ -31,23 +31,23 @@ Atomic Desktop, to fit my personal needs.
 Building the image has been best-fitted for Podman usage on local instances. Yeah, it's a little bit rough at the moment.
 
 ## Building the image locally
-To build the *coreos* base image, execute
+To build the *core-os* base image, execute
 ``sudo podman build --target=coreos:latest -t core-os:latest .``
 
-To build the *coreos* image for Asus machines, execute
+To build the *core-os* image for Asus machines, execute
 ``sudo podman build --target=coreos:asus-latest -t core-os:asus-latest .``
 
-To build the *coreos* image for Surface machines, execute
+To build the *core-os* image for Surface machines, execute
 ``sudo podman build --target=coreos:surface-latest -t core-os:surface-latest .``
 
 ## Switch to the new image
-To use the *coreos* base image, execute
+To use the *core-os* base image, execute
 ``sudo bootc switch --transport containers-storage $(sudo podman images -q core-os:latest)``
 
-To use the *coreos* Asus image, execute
+To use the *core-os* Asus image, execute
 ``sudo bootc switch --transport containers-storage $(sudo podman images -q core-os:asus-latest)``
 
-To use the *coreos* Asus image, execute
+To use the *core-os* Asus image, execute
 ``sudo bootc switch --transport containers-storage $(sudo podman images -q core-os:surface-latest)``
 
 # Credits
