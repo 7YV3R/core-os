@@ -26,7 +26,7 @@ dnf5 install -y --setopt=install_weak_deps=False \
 	xorg-x11-drv-nvidia-cuda
 
 # install Kernel args
-cp /ctx/system_files/10_nvidia.toml /usr/lib/bootc/kargs.d/10-nvidia.toml
+cp /ctx/system_files/nvidia/10_nvidia.toml /usr/lib/bootc/kargs.d/10-nvidia.toml
 
 
 ### Kernel Mod
