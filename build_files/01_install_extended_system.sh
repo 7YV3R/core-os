@@ -75,6 +75,8 @@ systemctl mask suspend.target
 systemctl mask hibernate.target 
 systemctl mask hybrid-sleep.target
 
+# disable bluetooth at start
+systemctl disable bluetooth.service
 
 # Cleanup
 dnf5 clean all
