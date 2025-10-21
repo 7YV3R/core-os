@@ -16,6 +16,7 @@ dnf5 install -y --setopt=install_weak_deps=False \
 	android-tools \
 	codium \
 	git \
+	openldap-clients \
 	python3 \
 	python3-pip \
 	python3-virtualenv
