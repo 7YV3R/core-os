@@ -10,3 +10,6 @@
 [submodule "dotconfig_files/wlogout"]
 	path = dotconfig_files/wlogout
 	url = https://github.com/7YV3R/wlogout.git
+[submodule "dotconfig_files/wofi"]
+	path = dotconfig_files/wofi
+	url = https://github.com/7YV3R/wofi.git
