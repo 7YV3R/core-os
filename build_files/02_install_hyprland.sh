@@ -18,6 +18,7 @@ dnf5 install -y --setopt=install_weak_deps=False \
     google-noto-sans-cjk-fonts \
     grim \
     hyprland \
+    hyprland-qtutils \
     hyprlock \
     hyprshot \
     jetbrains-mono-fonts-all \
