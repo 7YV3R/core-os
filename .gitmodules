@@ -7,3 +7,6 @@
 [submodule "dotconfig_files/waybar"]
 	path = dotconfig_files/waybar
 	url = https://github.com/7YV3R/waybar.git
+[submodule "dotconfig_files/wlogout"]
+	path = dotconfig_files/wlogout
+	url = https://github.com/7YV3R/wlogout.git
