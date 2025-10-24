@@ -4,3 +4,6 @@
 [submodule "dotconfig_files/swaync"]
 	path = dotconfig_files/swaync
 	url = https://github.com/7YV3R/swaync.git
+[submodule "dotconfig_files/waybar"]
+	path = dotconfig_files/waybar
+	url = https://github.com/7YV3R/waybar.git
