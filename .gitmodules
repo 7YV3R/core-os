@@ -1,0 +1,3 @@
+[submodule "dotconfig_files/hypr"]
+	path = dotconfig_files/hypr
+	url = https://github.com/7YV3R/hypr.git
