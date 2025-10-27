@@ -50,6 +50,18 @@ To use the *core-os* Asus image, execute
 To use the *core-os* Asus image, execute
 ``sudo bootc switch --transport containers-storage $(sudo podman images -q core-os:surface-latest)``
 
+# Known bugs
+With the implementation of *docker* in addition to podman, the *rootful podman* goes haywire. It cannot access the network anymore (rootles podman is able though).
+
+At the moment the only fix is to setup *iptables* to accept forward requests via following command:
+``sudo iptables -P FORWARD ACCEPT``
+
+Or you disable and mask the docker service via 
+```
+sudo systemctl disable docker.service
+sudo systemctl mask docker.service
+```
+
 # Credits
 - Most of the Hyprland DotFiles are based on or directly from **JaKooLit's** repository (https://github.com/JaKooLit/Hyprland-Dots). 
 - Also most of the wallpaper files are from **JaKooLit's** repo. (https://github.com/JaKooLit/Wallpaper-Bank)

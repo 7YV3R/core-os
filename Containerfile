@@ -30,12 +30,19 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build_files/03_install_virtualization.sh
 
+# Add Layer with containerization stuff
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    /ctx/build_files/04_install_containerization.sh
+
 # Add Layer with development environment
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build_files/04_install_dev_environment.sh
+    /ctx/build_files/05_install_dev_environment.sh
 
 ### LINTING
 ## Verify final image and contents are correct.
@@ -50,14 +57,14 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build_files/05_install_nvidia.sh
+    /ctx/build_files/06_install_nvidia.sh
 
 # Add Layer with Asus related stuff
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build_files/08_install_asus.sh
+    /ctx/build_files/07_install_asus.sh
 
 ### LINTING
 ## Verify final image and contents are correct.
