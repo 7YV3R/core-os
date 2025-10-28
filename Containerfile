@@ -1,3 +1,9 @@
+# Build Args
+ARG FEDORA_IMAGE="quay.io/fedora-ostree-desktops/kinoite"
+ARG FEDORA_VERSION="42"
+ARG FEDORA_VERSION_SURFACE="42"
+
+
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
 COPY build_files /build_files
@@ -7,7 +13,7 @@ COPY dotconfig_files /dotconfig_files
 COPY network_files /network_files
 
 # define base image
-FROM quay.io/fedora-ostree-desktops/kinoite:42 as coreos:latest
+FROM ${FEDORA_IMAGE}:${FEDORA_VERSION} as core-os-base
 
 # Add Layer with extended system modifications
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
@@ -48,9 +54,9 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 ## Verify final image and contents are correct.
 RUN bootc container lint
 
-#---------------------------- coreos:asus-latest-----------------------------   
+#---------------------------- core-os:asus-latest-----------------------------   
 
-FROM coreos:latest as coreos:asus-latest
+FROM core-os-base as core-os-asus
 
 # Add Layer with Nvidia
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
@@ -70,9 +76,12 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 ## Verify final image and contents are correct.
 RUN bootc container lint
 
-#---------------------------- coreos:surface-latest-----------------------------
+#---------------------------- core-os:surface-latest-----------------------------
 
-FROM coreos:latest as coreos:surface-latest
+FROM core-os-base as core-os-surface
+
+ARG FEDORA_VERSION_SURFACE=${FEDORA_VERSION_SURFACE}
+ENV FEDORA_VERSION_SURFACE=${FEDORA_VERSION_SURFACE}
 
 # Add Layer with Surface related stuff
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \

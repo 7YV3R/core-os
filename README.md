@@ -32,13 +32,13 @@ Building the image has been best-fitted for Podman usage on local instances. Yea
 
 ## Building the image locally
 To build the *core-os* base image, execute
-``sudo podman build --target=coreos:latest -t core-os:latest .``
+``sudo podman build --target=core-os-base -t core-os:latest .``
 
 To build the *core-os* image for Asus machines, execute
-``sudo podman build --target=coreos:asus-latest -t core-os:asus-latest .``
+``sudo podman build --target=core-os-asus -t core-os:asus-latest .``
 
 To build the *core-os* image for Surface machines, execute
-``sudo podman build --target=coreos:surface-latest -t core-os:surface-latest .``
+``sudo podman build --target=core-os-surface -t core-os:surface-latest .``
 
 ## Switch to the new image
 To use the *core-os* base image, execute
@@ -49,18 +49,6 @@ To use the *core-os* Asus image, execute
 
 To use the *core-os* Asus image, execute
 ``sudo bootc switch --transport containers-storage $(sudo podman images -q core-os:surface-latest)``
-
-# Known bugs
-With the implementation of *docker* in addition to podman, the *rootful podman* goes haywire. It cannot access the network anymore (rootles podman is able though).
-
-At the moment the only fix is to setup *iptables* to accept forward requests via following command:
-``sudo iptables -P FORWARD ACCEPT``
-
-Or you disable and mask the docker service via 
-```
-sudo systemctl disable docker.service
-sudo systemctl mask docker.service
-```
 
 # Credits
 - Most of the Hyprland DotFiles are based on or directly from **JaKooLit's** repository (https://github.com/JaKooLit/Hyprland-Dots). 
