@@ -50,6 +50,10 @@ To use the *core-os* Asus image, execute
 To use the *core-os* Asus image, execute
 ``sudo bootc switch --transport containers-storage $(sudo podman images -q core-os:surface-latest)``
 
+
+sudo iptables -P FORWARD ACCEPT
+
+
 # Credits
 - Most of the Hyprland DotFiles are based on or directly from **JaKooLit's** repository (https://github.com/JaKooLit/Hyprland-Dots). 
 - Also most of the wallpaper files are from **JaKooLit's** repo. (https://github.com/JaKooLit/Wallpaper-Bank)
