@@ -25,3 +25,13 @@ dnf5 swap -y mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
 # ensure Repo is disabled
 sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/cuda-fedora.repo
 sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/nvidia-container-toolkit.repo
+
+# workaround for akmod permission issue
+chmod 777 /var/tmp
+
+# perform building kernel modules
+# PATH=/tmp/bin:$PATH dkms autoinstall -k ${kver}
+PATH=/tmp/bin:$PATH akmods --force --kernels ${kver}
+
+# revert permissions
+chmod 755 /var/tmp

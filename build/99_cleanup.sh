@@ -2,6 +2,10 @@
 
 set -euox pipefail
 
+# remove fake uname
+rm -rf /tmp/fake-uname /tmp/bin/uname
+
+
 dnf5 clean all
 rm -rf /var/run*
 rm -rf /var/cache/dnf*

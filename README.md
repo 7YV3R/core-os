@@ -73,3 +73,4 @@ E.g.: ``./build_iso.sh localhost/core-os:latest``
 # Credits
 - I learned a lot by examining **mrguitar's** (https://github.com/mrguitar) bootc repos, especially the **fedora-nvidia-bootc** one (https://github.com/mrguitar/fedora-nvidia-bootc/). In fact, i started my repo by tinkering with a clone of his *fedora-nvidia-bootc* repo.
 - All the stuff needed to build ISOs to (inatially) install the bootc image to baremetal, has been derived from https://osbuild.org/docs/bootc/
+- Plymouth Themes from **Aditya Shakya (adi1090x)** @GitHub (https://github.com/adi1090x/plymouth-themes)

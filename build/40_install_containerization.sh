@@ -29,9 +29,25 @@ dnf5 install -y --setopt=install_weak_deps=False \
 	toolbox \
 	xhost
 
+# install flathub repository
+flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+# prepare a selection of flatpak images for containerization
+# those will be install via the systemd service "flatpack-preinstall.service"
+cat <<EOF > "/etc/flatpak/preinstall.d/container.preinstall"
+[Flatpak Preinstall com.ranfdev.DistroShelf]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstallio.podman_desktop.PodmanDesktop]
+Branch=stable
+IsRuntime=false
+EOF
+
 # distrobox patch according to
 # - https://github.com/89luca89/distrobox/issues/1865
-sed -i 's/set -- "su" /set -- "su" "--login" /' /usr/bin/distrobox-enter
+#sed -i 's/set -- "su" /set -- "su" "--login" /' /usr/bin/distrobox-enter
+# deactivated, becaus graphical apps dont work anymore
 
 # install fix for gui applications in distrobox
 mkdir -p /etc/skel
@@ -46,7 +62,7 @@ install -Dm0755 /ctx/build/91_fix_display.sh /etc/profile.d/fix_display.sh
 # enable services
 systemctl enable docker
 systemctl enable podmanfix
-systemctl enable podman-auto-update.timer
+systemctl enable flatpack-preinstall.service
 
 # ensure Repo is disabled
 sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/docker-ce.repo

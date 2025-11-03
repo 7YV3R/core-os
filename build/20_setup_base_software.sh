@@ -5,6 +5,7 @@ set -euox pipefail
 # ensure Repo is disabled
 sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/librewolf.repo
 
+# install basic additional software
 dnf5 install --best --allowerasing -y --skip-unavailable \
 	bolt \
 	cockpit-bridge \
@@ -27,14 +28,36 @@ dnf5 install --best --allowerasing -y --skip-unavailable \
 	lm_sensors \
 	nano \
 	ncdu \
+	NetworkManager-wifi \
 	osbuild-selinux \
 	p7zip \
 	plymouth \
+	plymouth-plugin-script \
 	screen \
 	syncthing \
 	thermald \
 	tuned \
 	wireshark
+
+# install wifi firmware
+dnf5 install --best --allowerasing -y --skip-unavailable \
+	atheros-firmware \
+	atmel-firmware \
+	b43-fwcutter \
+	b43-openfwwf \
+	brcmfmac-firmware \
+	iwlegacy-firmware \
+	iwlwifi-dvm-firmware \
+	iwlwifi-mvm-firmware \
+	libertas-firmware \
+	mt7xxx-firmware \
+	nxpwireless-firmware \
+	realtek-firmware \
+	tiwilink-firmware \
+	zd1211-firmware
+
+# Setup plymouth theme
+plymouth-set-default-theme square_hud -R
 
 # install veracrypt
 VERACRYPT_DOWNLOAD_URL="https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-1.26.24-Fedora-40-x86_64.rpm"

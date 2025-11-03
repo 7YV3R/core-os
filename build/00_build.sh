@@ -17,9 +17,6 @@ export kver=$(rpm -q kernel | sort -V | head -n 1 | cut -d' ' -f1 | sed 's/^kern
 if [ "${INSTALL_NVIDIA}" == "true" ]; then
   # Install NVIDIA
   /ctx/build/30_install_nvidia.sh
-
-  # perform building kernel modules
-  /ctx/build/90_kmod.sh
 fi
 
 # install containerization stuff

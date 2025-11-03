@@ -1,6 +1,7 @@
-# ISO-files #
+# ISO-related-files #
 #########################
 *.iso
+manifest-anaconda-iso.json
 
 # OS generated files #
 ######################

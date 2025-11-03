@@ -21,6 +21,8 @@ ENV INSTALL_NVIDIA="${INSTALL_NVIDIA}"
 
 # setup etc
 COPY system/etc etc
+# copy plymouth themes
+COPY plymouth usr/share/plymouth
 
 # build the base image by invoking the build script
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
