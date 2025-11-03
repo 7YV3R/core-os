@@ -1,95 +1,49 @@
-# Build Args
-ARG FEDORA_IMAGE="quay.io/fedora-ostree-desktops/kinoite"
-ARG FEDORA_VERSION="42"
-ARG FEDORA_VERSION_SURFACE="42"
+ARG BASE_IMAGE_NAME="quay.io/fedora/fedora-bootc"
+ARG BASE_IMAGE_TAG="43"
+ARG INSTALL_NVIDIA="true"
 
-
+#---------------------------------- build layer -----------------------------------------
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
-COPY build_files /build_files
-COPY system_files /system_files
-COPY repo_files /repo_files
-COPY dotconfig_files /dotconfig_files
-COPY network_files /network_files
+# copy over the build files
+COPY --chmod=755 build/* /build/
 
-# define base image
-FROM ${FEDORA_IMAGE}:${FEDORA_VERSION} as core-os-base
+#-----------------------------------core os base ----------------------------------------
+FROM ${BASE_IMAGE_NAME:-quay.io/fedora/fedora-bootc}:${BASE_IMAGE_TAG:-43} AS core-os-base
 
-# Add Layer with extended system modifications
+# make usage of build arguments during build-time
+ARG BASE_IMAGE_TAG
+ARG INSTALL_NVIDIA
+
+# make build arguments available as environment variables
+ENV BASE_IMAGE_TAG="${BASE_IMAGE_TAG}"
+ENV INSTALL_NVIDIA="${INSTALL_NVIDIA}"
+
+# setup etc
+COPY system/etc etc
+
+# build the base image by invoking the build script
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build_files/01_install_extended_system.sh
+    /ctx/build/00_build.sh
 
-# Add Layer with Hyprland
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
-    --mount=type=cache,dst=/var/cache \
-    --mount=type=cache,dst=/var/log \
-    --mount=type=tmpfs,dst=/tmp \
-    /ctx/build_files/02_install_hyprland.sh
+# setup usr
+COPY system/usr usr
 
-# Add Layer with Virtualization
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
-    --mount=type=cache,dst=/var/cache \
-    --mount=type=cache,dst=/var/log \
-    --mount=type=tmpfs,dst=/tmp \
-    /ctx/build_files/03_install_virtualization.sh
-
-# Add Layer with containerization stuff
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
-    --mount=type=cache,dst=/var/cache \
-    --mount=type=cache,dst=/var/log \
-    --mount=type=tmpfs,dst=/tmp \
-    /ctx/build_files/04_install_containerization.sh
-
-# Add Layer with development environment
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
-    --mount=type=cache,dst=/var/cache \
-    --mount=type=cache,dst=/var/log \
-    --mount=type=tmpfs,dst=/tmp \
-    /ctx/build_files/05_install_dev_environment.sh
-
-### LINTING
-## Verify final image and contents are correct.
+#added linting to catch basic issues
 RUN bootc container lint
 
-#---------------------------- core-os:asus-latest-----------------------------   
+#-----------------------------------core os asus ----------------------------------------
+FROM core-os-base AS core-os-asus
 
-FROM core-os-base as core-os-asus
-
-# Add Layer with Nvidia
+# build the ASUS image by invoking the ASUS build script
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build_files/06_install_nvidia.sh
+    /ctx/build/80_install_asus.sh
 
-# Add Layer with Asus related stuff
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
-    --mount=type=cache,dst=/var/cache \
-    --mount=type=cache,dst=/var/log \
-    --mount=type=tmpfs,dst=/tmp \
-    /ctx/build_files/07_install_asus.sh
-
-### LINTING
-## Verify final image and contents are correct.
-RUN bootc container lint
-
-#---------------------------- core-os:surface-latest-----------------------------
-
-FROM core-os-base as core-os-surface
-
-ARG FEDORA_VERSION_SURFACE=${FEDORA_VERSION_SURFACE}
-ENV FEDORA_VERSION_SURFACE=${FEDORA_VERSION_SURFACE}
-
-# Add Layer with Surface related stuff
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
-    --mount=type=cache,dst=/var/cache \
-    --mount=type=cache,dst=/var/log \
-    --mount=type=tmpfs,dst=/tmp \
-    /ctx/build_files/09_install_surface.sh
-
-### LINTING
-## Verify final image and contents are correct.
+#added linting to catch basic issues
 RUN bootc container lint

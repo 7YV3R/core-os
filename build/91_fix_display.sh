@@ -1,0 +1,1 @@
+chown -f -R SUSER:$USER /tmp/.X11-unix
