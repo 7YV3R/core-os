@@ -12,6 +12,10 @@ dnf5 install -y --setopt=install_weak_deps=False \
 	git \
 	just
 
+# delete chinese README.md from just doc, because it troubles container installation via anaconda
+# the reason is, that the filepath contains non utf8 compatible characters (chinese)
+rm -f /usr/share/doc/just/README.*.md
+
 # ensure Repo is disabled
 sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/vscodium.repo
 
