@@ -6,5 +6,6 @@ set -euox pipefail
 dnf5 clean all
 rm -rf /var/run*
 rm -rf /var/cache/dnf*
+rm -rf /var/tmp/*  && rm -rf /var/tmp/.*
 rm -rf /boot/* && rm -rf /boot/.*
 rm -rf /tmp/* && rm -rf /tmp/.*
