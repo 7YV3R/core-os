@@ -1,0 +1,1 @@
+kargs = ["nvidia-uvm nvidia-drm nvidia-drm.fbdev=1 nvidia-drm.modeset=1 nouveau.modeset=0 rd.driver.blacklist=nouveau,nova-core modprobe.blacklist=nouveau,nova-core"]

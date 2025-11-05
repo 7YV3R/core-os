@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euox pipefail
+
+
+# This parent script installs desktop environments
+# Disable or enable other desktop environments via
+# (un)commenting of the build script.
+# Attention! the last installed desktop environment will
+# be set as default.
+
+# Install KDE
+/build/21_install_kde.sh
+
+# Install Hyprland
+#/build/22_install_hyprland.sh
+
+# start directly into installed desktop environment
+systemctl set-default graphical.target
+
+# cleanup layer
+/scripts/99_cleanup_layer.sh

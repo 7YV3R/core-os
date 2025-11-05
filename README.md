@@ -32,19 +32,40 @@ This repo is ment to be used for local building.
 
 ## Building the image locally
 To build the *core-os* base image, execute
-``sudo podman build --build-arg=INSTALL_NVIDIA="true" --target=core-os-base -t localhost/core-os:latest .`` 
+```
+sudo podman build --target=core-os-base -t localhost/core-os:latest .
+``` 
+
+To build the *core-os* image with NVIDIA drivers, execute
+```
+sudo podman build --target=core-os-nvidia -t localhost/core-os:nvidia-latest .
+```
 
 To build the *core-os* image for Asus machines, execute
-``sudo podman build --build-arg=INSTALL_NVIDIA="true" --target=core-os-asus -t localhost/core-os:asus-latest .``
+```
+sudo podman build --target=core-os-asus -t localhost/core-os:asus-latest .
+```
+
+To build the *core-os* image for Surface machines, execute
+```
+sudo podman build --target=core-os-surface -t localhost/core-os:surface-latest .
+```
 
 
 ## Switch to the new image
 To use the *core-os* base image, execute
-``sudo bootc switch --transport containers-storage $(sudo podman images -q localhost/core-os:latest)``
+```
+sudo bootc switch --transport containers-storage $(sudo podman images -q localhost/core-os:latest)
+```
 
 To use the *core-os* Asus image, execute
-``sudo bootc switch --transport containers-storage $(sudo podman images -q localhost/core-os:asus-latest)``
+```
+sudo bootc switch --transport containers-storage $(sudo podman images -q localhost/core-os:asus-latest)
+```
 
+If something goes wrong with the new image, reboot and choose the preview build in the boot menu.
+After boot completed successfull with the old version, execute ``sudo bootc rollback``. The current booted
+image will be used as standard.
 
 ## Build ISO
 You can use either

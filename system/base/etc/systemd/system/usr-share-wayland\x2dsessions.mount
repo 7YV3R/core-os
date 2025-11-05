@@ -1,0 +1,14 @@
+[Unit]
+Description=Transient writable overlay for /usr/share/wayland-sessions
+DefaultDependencies=no
+After=local-fs.target
+Before=basic.target
+
+[Mount]
+What=overlay
+Where=/usr/share/wayland-sessions
+Type=overlay
+Options=lowerdir=/usr/share/wayland-sessions,upperdir=/var/lib/overlay-wsessions/upper,workdir=/var/lib/overlay-wsessions/work
+
+[Install]
+WantedBy=multi-user.target

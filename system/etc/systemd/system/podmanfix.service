@@ -1,9 +1,0 @@
-[Unit]
-Description=Podman NAT fix
-
-[Service]
-Type=simple
-ExecStart=/bin/bash -c "iptables -P FORWARD ACCEPT"
-
-[Install]
-WantedBy=multi-user.target
