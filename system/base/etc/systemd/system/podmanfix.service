@@ -1,10 +1,12 @@
 [Unit]
 Description=Podman NAT fix
+After=docker.service
+BindsTo=docker.service
+ReloadPropagatedFrom=docker.service
 
 [Service]
-Type=oneshot
-RemainAfterExit=yes
+Type=simple
+ExecPreStart=/usr/bin/echo 1 > /proc/sys/net/ipv4/ip_forward
 ExecStart=/usr/bin/iptables -P FORWARD ACCEPT
-
 [Install]
 WantedBy=multi-user.target
