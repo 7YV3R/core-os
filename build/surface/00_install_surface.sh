@@ -2,14 +2,14 @@
 
 set -ouex pipefail
 
-# get the newest installed kernel version and make variable useable in subscripts
-export kver="$(/scripts/10_get_kernel_version.sh)"
-
 # install fake uname
 /scripts/10_uname_installer.sh install
 
 # install kernel-installer-fix
 /surface/10_kernel_installer_fix.sh install
+
+# get the newest installed kernel version and make variable useable in subscripts
+export kver="$(/scripts/10_get_kernel_version.sh)"
 
 # fix because there is no f43 release version at the moment
 if [ "${BASE_IMAGE_TAG}" == "43" ]; then
