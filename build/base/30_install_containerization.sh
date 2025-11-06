@@ -32,7 +32,16 @@ dnf5 install -y --setopt=install_weak_deps=False \
 # install flathub repository
 flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-# install Flatpak apps
+# Attention: these Flatpak applications will only be installed during the
+# initial installation process. So modifying this list AFTER
+# the initial installation by updating the image, will NOT add the
+# Flathub applications to the system.
+#
+# This method currently generates a lot of Linting Warnings, because it
+# manipulates the /var/lib folder and it will NOT be touched AFTER the
+# initial installation process.
+# We have to wait, till flathub finally integrates the command "preinstall".
+# FIX this
 flatpak install -y --system \
 	com.ranfdev.DistroShelf \
 	io.podman_desktop.PodmanDesktop
