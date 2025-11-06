@@ -52,6 +52,8 @@ dnf5 remove -y --no-autoremove \
 	dracut-config-rescue \
     firefox \
     firefox-es \
+	kdeconnect \
+	kdeconnect-sms \
 	PackageKit-command-not-found \
 	plasma-discover-offline-updates \
 	plasma-discover-packagekit \
