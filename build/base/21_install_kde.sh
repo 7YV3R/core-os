@@ -16,5 +16,3 @@ u!      abrt    173             "Automatic Bug Reporting Tool (ABRT)"   /usr/sbi
 g       abrt    173             -
 EOF
 
-# start directly into KDE
-systemctl set-default graphical.target
