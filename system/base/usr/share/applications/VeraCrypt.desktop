@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=VeraCrypt
+Comment=Disk encryption with strong security for Microsoft Windows, Linux and macOS.
+Exec=/usr/local/bin/veracrypt %F
+Icon=/usr/share/icons/veracrypt-icon.png
+Terminal=false
+Type=Application
+Categories=Utility;Security;
