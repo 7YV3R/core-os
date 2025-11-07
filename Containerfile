@@ -37,6 +37,15 @@ FROM scratch AS scripts-surface
 # copy over the build files
 COPY --chmod=755 scripts/surface/* /
 
+
+#---------------------------------- veracrypt builder -----------------------------------------
+# Builing Veracrypt in an builder container and copy over the final binary
+FROM debian:latest AS veracrypt-builder
+RUN apt update && apt install -y \
+    build-essential git make yasm pkg-config libwxgtk3.2-dev libfuse-dev git libpcsclite-dev yasm pkg-config libpcsclite-dev
+RUN mkdir /build/ && cd /build && git clone https://github.com/veracrypt/VeraCrypt.git && cd VeraCrypt/src && make 
+
+
 #-----------------------------------core os base ----------------------------------------
 FROM ${BASE_IMAGE_NAME:-quay.io/fedora/fedora-bootc}:${BASE_IMAGE_TAG:-43} AS core-os-base
 
@@ -59,6 +68,9 @@ RUN --mount=type=bind,from=build-base,source=/,target=/build \
     --mount=type=tmpfs,dst=/tmp \
     /build/00_prepare_base.sh
 
+# copy compiled veracrypt binary to main image
+COPY --from=veracrypt-builder /build/VeraCrypt/src/Main/veracrypt /usr/local/bin/veracrypt
+
 # install firmware
 RUN --mount=type=bind,from=build-base,source=/,target=/build \
     --mount=type=bind,from=scripts-shared,source=/,target=/scripts \
@@ -73,7 +85,15 @@ RUN --mount=type=bind,from=build-base,source=/,target=/build \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /build/20_install_desktop_environment.sh
+    /build/10_install_desktop_environment.sh
+
+# install and setup desktop environment
+RUN --mount=type=bind,from=build-base,source=/,target=/build \
+    --mount=type=bind,from=scripts-shared,source=/,target=/scripts \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    /build/20_setup_base_software.sh
 
 # install containerization environment
 RUN --mount=type=bind,from=build-base,source=/,target=/build \
