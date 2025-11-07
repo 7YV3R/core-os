@@ -18,7 +18,9 @@ flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/fla
 flatpak install -y --system \
     eu.betterbird.Betterbird \
 	com.brave.Browser \
+    com.calibre_ebook.calibre \
     org.gimp.GIMP \
+    org.keepassxc.KeePassXC \
     org.libreoffice.LibreOffice \
     com.github.dynobo.normcap \
     org.videolan.VLC
