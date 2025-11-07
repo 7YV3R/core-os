@@ -7,7 +7,19 @@ dnf5 group install -y kde-desktop
 
 # install KDE specific packages
 dnf5 install --best --allowerasing -y --skip-unavailable \
-    kate
+    kate \
+    ksshaskpass \
+    NetworkManager-wifi
+
+# remove unwanted packages
+dnf5 remove -y --no-autoremove \
+	kdeconnect \
+	kdeconnect-sms \
+	plasma-discover-offline-updates \
+	plasma-discover-packagekit \
+	plasma-pk-updates \
+	plasma-x11 \
+	plasma-workspace-x11
 
 # setup sysusersd for abrt user
 cat <<EOF > "/usr/lib/sysusers.d/abrt.conf"

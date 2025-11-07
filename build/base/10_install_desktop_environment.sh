@@ -10,10 +10,10 @@ set -euox pipefail
 # be set as default.
 
 # Install KDE
-/build/21_install_kde.sh
+/build/11_install_kde.sh
 
 # Install Hyprland
-#/build/22_install_hyprland.sh
+#/build/12_install_hyprland.sh
 
 # start directly into installed desktop environment
 systemctl set-default graphical.target

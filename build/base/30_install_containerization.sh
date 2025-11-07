@@ -22,12 +22,14 @@ dnf5 install -y --setopt=install_weak_deps=False \
 
 # install podman and additional containerization packages
 dnf5 install -y --setopt=install_weak_deps=False \
-	distrobox \
 	podman-machine \
 	podman-tui \
 	podmansh \
 	toolbox \
 	xhost
+
+# install distrobox
+wget -qO- https://raw.githubusercontent.com/89luca89/distrobox/main/install | sh
 
 # install flathub repository
 flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -50,7 +52,7 @@ flatpak install -y --system \
 # distrobox patch according to
 # - https://github.com/89luca89/distrobox/issues/1865
 #sed -i 's/set -- "su" /set -- "su" "--login" /' /usr/bin/distrobox-enter
-# deactivated, becaus graphical apps dont work anymore
+# deactivated, because graphical apps dont work anymore
 
 # install fix for gui applications in distrobox
 mkdir -p /etc/skel
