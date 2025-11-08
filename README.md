@@ -10,9 +10,9 @@ After this sidestep i discovered the world of bootc.
 Now I'm a big fan of the bootc philosophy to create a core os, which
 - can be customized like Podman/Docker environments and boot like a normal os
 - is immutable at its core
-- some kind of different stages at boot time
-- layers applications via Flatpak, Appimage, Distrobox or normal containers on top of it
-- can be swapped easily with another bootc based Oses
+- enables some kind of different stages at boot time
+- allow an abstraction and isolation of applications via Flatpak, Appimage, Distrobox or normal containers on top of it
+- can be swapped easily with another bootc based OSes
 
 # Warning
 This Repo is far from being production-ready and more an experiment to create a customized
@@ -24,6 +24,7 @@ Atomic Desktop, to fit my personal needs.
 - NVIDIA Support
 - KDE as main Desktop Environment
 - Working on ASUS devices
+- Working on Surface devices
 - Support for virtualization and containerization
 - Easy customization
 
@@ -63,7 +64,7 @@ To use the *core-os* Asus image, execute
 sudo bootc switch --transport containers-storage $(sudo podman images -q localhost/core-os:asus-latest)
 ```
 
-If something goes wrong with the new image, reboot and choose the preview build in the boot menu.
+If something goes wrong with the new image, reboot and choose the previous build in the boot menu.
 After boot completed successfull with the old version, execute ``sudo bootc rollback``. The current booted
 image will be used as standard.
 
