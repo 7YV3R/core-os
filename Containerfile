@@ -46,8 +46,8 @@ RUN apt update && apt install -y \
 RUN mkdir /build/ && cd /build && git clone https://github.com/veracrypt/VeraCrypt.git && cd VeraCrypt/src && make 
 
 
-#-----------------------------------core os base ----------------------------------------
-FROM ${BASE_IMAGE_NAME:-quay.io/fedora/fedora-bootc}:${BASE_IMAGE_TAG:-43} AS core-os-base
+#-----------------------------------core os init ----------------------------------------
+FROM ${BASE_IMAGE_NAME:-quay.io/fedora/fedora-bootc}:${BASE_IMAGE_TAG:-43} AS core-os-init
 
 # make usage of build arguments during build-time
 ARG BASE_IMAGE_TAG
@@ -79,6 +79,9 @@ RUN --mount=type=bind,from=build-base,source=/,target=/build \
     --mount=type=tmpfs,dst=/tmp \
     /build/05_install_firmware.sh
 
+#-----------------------------------core os DE ----------------------------------------
+FROM core-os-init AS core-os-de
+
 # install and setup desktop environment
 RUN --mount=type=bind,from=build-base,source=/,target=/build \
     --mount=type=bind,from=scripts-shared,source=/,target=/scripts \
@@ -86,6 +89,9 @@ RUN --mount=type=bind,from=build-base,source=/,target=/build \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /build/10_install_desktop_environment.sh
+
+#-----------------------------------core os base ----------------------------------------
+FROM core-os-de AS core-os-base
 
 # install and setup desktop environment
 RUN --mount=type=bind,from=build-base,source=/,target=/build \
