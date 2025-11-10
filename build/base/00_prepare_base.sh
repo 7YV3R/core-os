@@ -11,7 +11,6 @@ export kver="$(/scripts/10_get_kernel_version.sh)"
 mkdir -p /var/roothome 
 mkdir -p /usr/lib/sysusers.d
 mkdir -p /var/lib/overlay-wsessions/{upper,work}
-mkdir -p /etc/tmpfiles.d
 
 # Install new dnf5 implementation if not available
 # all following manipulations need dnf5
@@ -44,6 +43,9 @@ systemctl mask hybrid-sleep.target
 
 # disable bluetooth at start
 systemctl disable bluetooth.service
+
+# disable bootc-fetch-apply-updates.timer
+systemctl disable bootc-fetch-apply-updates.timer
 
 # cleanup layer
 /scripts/99_cleanup_layer.sh
