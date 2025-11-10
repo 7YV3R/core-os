@@ -64,6 +64,11 @@ To use the *core-os* Asus image, execute
 sudo bootc switch --transport containers-storage $(sudo podman images -q localhost/core-os:asus-latest)
 ```
 
+To use the *core-os* Surface image, execute
+```
+sudo bootc switch --transport containers-storage $(sudo podman images -q localhost/core-os:surface-latest)
+```
+
 If something goes wrong with the new image, reboot and choose the previous build in the boot menu.
 After boot completed successfull with the old version, execute ``sudo bootc rollback``. The current booted
 image will be used as standard.
