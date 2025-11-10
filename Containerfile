@@ -40,7 +40,7 @@ COPY --chmod=755 scripts/surface/* /
 
 #---------------------------------- veracrypt builder -----------------------------------------
 # Builing Veracrypt in an builder container and copy over the final binary
-FROM debian:latest AS veracrypt-builder
+FROM debian:13 AS veracrypt-builder
 RUN apt update && apt install -y \
     build-essential git make yasm pkg-config libwxgtk3.2-dev libfuse-dev git libpcsclite-dev yasm pkg-config libpcsclite-dev
 RUN mkdir /build/ && cd /build && git clone https://github.com/veracrypt/VeraCrypt.git && cd VeraCrypt/src && make 
@@ -59,6 +59,8 @@ ENV BASE_IMAGE_TAG="${BASE_IMAGE_TAG}"
 COPY system/base/etc etc
 # copy plymouth themes
 COPY system/base/plymouth usr/share/plymouth
+# setup usr
+COPY system/base/usr usr
 
 # setup base image
 RUN --mount=type=bind,from=build-base,source=/,target=/build \
@@ -89,6 +91,9 @@ RUN --mount=type=bind,from=build-base,source=/,target=/build \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /build/10_install_desktop_environment.sh
+
+# setup theming
+COPY system/base/theme usr/share/
 
 #-----------------------------------core os base ----------------------------------------
 FROM core-os-de AS core-os-base
@@ -132,9 +137,6 @@ RUN --mount=type=bind,from=build-base,source=/,target=/build \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /build/60_install_flatpak.sh
-
-# setup usr
-COPY system/base/usr usr
 
 # Cleanup base image
 RUN --mount=type=bind,from=build-base,source=/,target=/build \
@@ -188,7 +190,7 @@ RUN --mount=type=bind,from=build-asus,source=/,target=/build \
     --mount=type=tmpfs,dst=/tmp \
     /build/99_cleanup_image.sh
 
-#-----------------------------------core os asus ----------------------------------------
+#-----------------------------------core os Surface ----------------------------------------
 FROM core-os-base AS core-os-surface
 
 # make usage of build arguments during build-time

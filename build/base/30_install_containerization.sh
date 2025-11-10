@@ -2,6 +2,16 @@
 
 set -euox pipefail
 
+# install docker-ce repo
+cat <<EOF > "/etc/yum.repos.d/docker-ce.repo"
+[docker-ce-stable]
+name=Docker CE Stable - \$basearch
+baseurl=https://download.docker.com/linux/fedora/\$releasever/\$basearch/stable
+enabled=0
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/fedora/gpg
+EOF
+
 # ensure Repo is temporarily enabled
 sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/docker-ce.repo
 
