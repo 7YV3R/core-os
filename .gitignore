@@ -1,6 +1,9 @@
 # ISO-related-files #
 #########################
 *.iso
+*.img
+cert.der
+key.pem
 manifest-anaconda-iso.json
 
 # OS generated files #

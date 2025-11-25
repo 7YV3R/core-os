@@ -34,39 +34,39 @@ This repo is ment to be used for local building.
 ## Building the image locally
 To build the *core-os* base image, execute
 ```
-sudo podman build --target=core-os-base -t localhost/core-os:latest .
+just build-containerfile localhost/core-os fedora
 ``` 
 
 To build the *core-os* image with NVIDIA drivers, execute
 ```
-sudo podman build --target=core-os-nvidia -t localhost/core-os:nvidia-latest .
+just build-containerfile localhost/core-os fedora-nvidia
 ```
 
 To build the *core-os* image for Asus machines, execute
 ```
-sudo podman build --target=core-os-asus -t localhost/core-os:asus-latest .
+just build-containerfile localhost/core-os fedora-asus
 ```
 
 To build the *core-os* image for Surface machines, execute
 ```
-sudo podman build --target=core-os-surface -t localhost/core-os:surface-latest .
+just build-containerfile localhost/core-os fedora-surface
 ```
 
 
 ## Switch to the new image
 To use the *core-os* base image, execute
 ```
-sudo bootc switch --transport containers-storage $(sudo podman images -q localhost/core-os:latest)
+just update-current-system localhost/core-os fedora
 ```
 
 To use the *core-os* Asus image, execute
 ```
-sudo bootc switch --transport containers-storage $(sudo podman images -q localhost/core-os:asus-latest)
-```
+just update-current-system localhost/core-os fedora-asus
+```                                                                                 
 
 To use the *core-os* Surface image, execute
 ```
-sudo bootc switch --transport containers-storage $(sudo podman images -q localhost/core-os:surface-latest)
+just update-current-system localhost/core-os fedora-surface
 ```
 
 If something goes wrong with the new image, reboot and choose the previous build in the boot menu.
@@ -74,28 +74,11 @@ After boot completed successfull with the old version, execute ``sudo bootc roll
 image will be used as standard.
 
 ## Build ISO
-You can use either
-- the provided build-shell-script *build_iso.sh*, or
-- use the following command-chain:
-
+Use the Justfile with following command:
 ```
-sudo podman run \
-    --rm \
-    -it \
-    --privileged \
-    --security-opt label=type:unconfined_t \
-    -v ./config/iso.toml:/config.toml:ro \
-    -v ./output:/output \
-    -v /var/lib/containers/storage:/var/lib/containers/storage \
-    quay.io/centos-bootc/bootc-image-builder:latest \
-    --type anaconda-iso \
-    --rootfs btrfs \
-	--use-librepo=True \
-    localhost/core-os:latest
+just generate-installer-iso localhost/core-os asus-latest
 ```
 
-The shellscript expects the image/tag which should be used as parameter on $1 (first parameter after ./build_iso.sh)
-E.g.: ``./build_iso.sh localhost/core-os:latest``
 
 # Credits
 - I learned a lot by examining **mrguitar's** (https://github.com/mrguitar) bootc repos, especially the **fedora-nvidia-bootc** one (https://github.com/mrguitar/fedora-nvidia-bootc/). In fact, i started my repo by tinkering with a clone of his *fedora-nvidia-bootc* repo.
