@@ -63,9 +63,6 @@ sudo dnf install -y \
 	libnvidia-container-tools-${NVIDIA_CONTAINER_TOOLKIT_VERSION} \
 	libnvidia-container1-${NVIDIA_CONTAINER_TOOLKIT_VERSION}
 
-# reconfigure docker daemon
-nvidia-ctk runtime configure --runtime=docker
-
 # remove fix after install 
 rm /etc/rpm/macros.verify
 
