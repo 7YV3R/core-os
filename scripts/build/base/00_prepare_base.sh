@@ -2,7 +2,9 @@
 set -euox pipefail
 
 # create root home
-mkdir -p /var/roothome 
+mkdir -p /var/roothome
+mkdir -p /var/opt
+ln -s /opt /var/opt
 mkdir -p /usr/lib/sysusers.d
 mkdir -p /var/lib/overlay-wsessions/{upper,work}
 
