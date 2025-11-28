@@ -76,7 +76,7 @@ image will be used as standard.
 ## Build ISO
 Use the Justfile with following command:
 ```
-just generate-installer-iso localhost/core-os asus-latest
+just generate-installer-iso localhost/core-os fedora-asus
 ```
 
 
